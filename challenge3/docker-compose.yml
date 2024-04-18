@@ -1,0 +1,22 @@
+version: "4"
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - node-service
+
+  node-service:
+    build: ./api
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: example
